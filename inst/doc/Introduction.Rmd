@@ -1,0 +1,155 @@
+---
+title: "Getting Started"
+output: 
+  html_document:
+    theme: flatly
+    keep_md: yes
+    number_sections: true
+    highlighted: default 
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Getting Started With StreamCatTools StreamCatTools}
+  %\VignetteEncoding{UTF-8}{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  warning = FALSE, 
+  message = FALSE
+)
+```
+
+## Installing and loading StreamCatTools
+To install, currently you need to install from GitHub using devtools
+```{r, message=FALSE, eval=FALSE}
+library(devtools)
+install_github('USEPA/StreamCatTools')
+```
+
+After installing load the library
+```{r, message=FALSE}
+library(StreamCatTools)
+```
+
+## Background
+The `StreamCatTools` package was designed to simplify the use of [StreamCat](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-dataset) data in R, leveraging the new [API for StreamCat](https://api.epa.gov/StreamCat/streams/metrics). 
+
+## StreamCat API
+We can  pull data into R from the [StreamCat API](https://usepa.github.io/StreamCatWebServices_Public/#/) by simply passing a URL to extract from json.  We have to hard-wire parameters though and are limited in the number of records returned through a `GET` request.
+```{r API}
+res <- jsonlite::fromJSON("https://api.epa.gov/StreamCat/streams/metrics?name=fert&areaOfInterest=cat&comid=179")
+res$items
+```
+
+## List API parameters
+List StreamCat parameters: Get a list of available StreamCat values for certain parameters using the `sc_get_params` function via the API
+```{r params}
+region_params <- sc_get_params(param='areaOfInterest')
+
+name_params <- sc_get_params(param='metric_names')
+
+print(paste0('region parameters are: ', paste(region_params,collapse = ', ')))
+print(paste0('A selection of available StreamCat metrics include: ',paste(name_params[1:10],collapse = ', ')))
+```
+We can also see what metrics are available for what areas of interest and what years using the `sc_get_params` function (which returns a tibble of information about StreamCat metrics):
+```{r params2}
+var_info <- sc_get_params(param='variable_info')
+head(var_info)
+```
+
+We can look up the display name or names for a metric using the `sc_fullname` function via the API
+```{r fullnames}
+metric='pcthbwet2011'
+fullname <- sc_fullname(metric)
+fullname
+```
+
+```{r fullnames2}
+metric='pctdecid2019,fert'
+fullname <- sc_fullname(metric)
+fullname
+```
+We can additionally get a data frame of state FIPS codes, abbreviations and names, and the same information for counties as well using `sc_get_params`:
+```{r states}
+states <- sc_get_params(param='state')
+head(states)
+```
+
+```{r counties}
+counties <- sc_get_params(param='county')
+head(counties)
+```
+
+## Get data for COMIDs
+In this example we access several variables, for several areas of interest, and for several COMIDs using the `sc_get_data` function.  Loads data into a tibble we can view.
+```{r get_data}
+df <- sc_get_data(metric='pcturbmd2006,damdens,tridens', aoi='rp100cat,cat,ws', comid='179,1337,1337420')
+knitr::kable(df)
+```
+
+## Get data for county
+In this example we access a couple variables at the watershed scale for the area of interest of a county (Benton County in this case) using the `sc_get_data` function. 
+```{r countydata}
+df <- sc_get_data(metric='pctwdwet2006', aoi='ws', county='41003')
+knitr::kable(head(df))
+```
+
+## Get all metrics for COMIDs or an Area of Interest
+We can also get all StreamCat metrics for a set of COMIDs or an area of interest.  **Please do not request metric='all' and aoi='conus' in order not to overload requests to the server.  Requesting metric='all' for a state or multiple states or hydroregions will also take a long time to process**.
+```{r all}
+df <- sc_get_data(comid='179', aoi='cat', metric='all')
+knitr::kable(head(df))
+```
+
+## Get NLCD data
+In this example we access National Land Cover Dataset (NLCD) data for 2001, just at the catchment level for several COMIDs using the `sc_nlcd` function.  Loads data into a tibble we can view.
+```{r get_nlcd}
+df <- sc_nlcd(year='2001', aoi='cat',
+              comid='179,1337,1337420')
+knitr::kable(df)
+```
+
+We can also pass a couple years for a different area of interest for another region like a county.
+```{r get_nlcd2}
+df <- sc_nlcd(year='2006, 2019', aoi='ws',
+              county='41003')
+knitr::kable(head(df))
+```
+
+## Get COMIDs
+In this example we use the `sc_get_comid` function to find COMIDs for USGS stream gages we load into R. We use a .csv file with coordinate columns and a known coordinate reference system.
+```{r comids, eval=FALSE}
+gages = readr::read_csv(system.file("extdata","Gages_flowdata.csv", package = "StreamCatTools"),show_col_types = FALSE)
+# we'll just grab a few variables to keep things simple
+gages <- gages[,c('SOURCE_FEA','STATION_NM','LON_SITE','LAT_SITE')]
+gages_coms <- sc_get_comid(gages, xcoord='LON_SITE',                   ycoord='LAT_SITE', crsys=4269)
+
+# Add the COMID we found back to gages data frame
+gages$COMID <- strsplit(gages_coms, ",")[[1]]
+df <- sc_get_data(metric='huden2010', aoi='ws', comid=gages_coms)
+df$COMID <- as.character(df$comid)
+gages <- dplyr::left_join(gages, df, by='COMID')
+knitr::kable(head(gages))
+```
+
+## Get data for a hydroregion
+In this example we access a couple watershed-only metrics for a particular NHDPlus hydroregion using the `sc_get_data` function.
+```{r hydroregion}
+df <- sc_get_data(metric='pctwdwet2006', aoi='ws', region='Region17')
+knitr::kable(head(df))
+```
+
+## Get data for CONUS
+In this example we access a metric for conus using the `sc_get_data` function - this is shown for demonstration but not run as it takes a bit of time
+```{r conus, eval=FALSE}
+# df <- sc_get_data(metric='om', aoi='ws', conus='true')
+# knitr::kable(head(df))
+```
+
