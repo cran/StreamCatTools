@@ -1560,10 +1560,11 @@ head(var_info)
 fullname &lt;- lc_fullname(metric)
 fullname
 #&gt; [1] &quot;Herbaceous Wetland Percentage 2016&quot;</code></pre>
-<pre class="r"><code>metric=&#39;pctdecid2019,fert&#39;
+<pre class="r"><code>metric=c(&#39;pctdecid2019&#39;,&#39;fert&#39;)
 fullname &lt;- lc_fullname(metric)
 fullname
-#&gt; character(0)</code></pre>
+#&gt; [1] &quot;Deciduous Forest Percentage 2019&quot;                   
+#&gt; [2] &quot;Synthetic Nitrogen Fertilizer Application Mean Rate&quot;</code></pre>
 </div>
 <div id="get-waterbody-comids" class="section level2" number="3">
 <h2><span class="header-section-number">3</span> Get Waterbody

@@ -29,7 +29,7 @@ fullname <- lc_fullname(metric)
 fullname
 
 ## ----fullnames2---------------------------------------------------------------
-metric='pctdecid2019,fert'
+metric=c('pctdecid2019','fert')
 fullname <- lc_fullname(metric)
 fullname
 
