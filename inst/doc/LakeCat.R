@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 
 ## ----name_params--------------------------------------------------------------
 library(StreamCatTools)
-region_params <- lc_get_params(param='areaOfInterest')
+region_params <- lc_get_params(param='aoi')
 
 name_params <- lc_get_params(param='metric_names')
 

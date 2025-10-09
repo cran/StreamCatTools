@@ -18,7 +18,7 @@ res <- jsonlite::fromJSON("https://api.epa.gov/StreamCat/streams/metrics?name=fe
 res$items
 
 ## ----params-------------------------------------------------------------------
-region_params <- sc_get_params(param='areaOfInterest')
+region_params <- sc_get_params(param='aoi')
 
 name_params <- sc_get_params(param='metric_names')
 

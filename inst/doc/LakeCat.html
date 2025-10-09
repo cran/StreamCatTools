@@ -1530,7 +1530,7 @@ certain parameters using the <code>lc_get_params</code> function (right
 now just metric names and areas of interest for this function) via the
 API</p>
 <pre class="r"><code>library(StreamCatTools)
-region_params &lt;- lc_get_params(param=&#39;areaOfInterest&#39;)
+region_params &lt;- lc_get_params(param=&#39;aoi&#39;)
 
 name_params &lt;- lc_get_params(param=&#39;metric_names&#39;)
 
@@ -1546,12 +1546,12 @@ head(var_info)
 #&gt; # A tibble: 6 × 13
 #&gt;   category     metric aoi   year  short_description long_description units  dsid
 #&gt;   &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt; &lt;dbl&gt;
-#&gt; 1 Anthropogen… NABD_… Cat,… &lt;NA&gt;  NABD Dam Density  Density of geor… Coun…    33
-#&gt; 2 Anthropogen… NABD_… Cat,… &lt;NA&gt;  NABD NID Reservo… Volume all rese… Cubi…    33
-#&gt; 3 Anthropogen… NABD_… Cat,… &lt;NA&gt;  NABD Normal Rese… Volume all rese… Cubi…    33
-#&gt; 4 Natural      Preci… Cat,… &lt;NA&gt;  Surplus Precipit… This dataset re… Kilo…    75
-#&gt; 5 Natural      Rckde… Cat,… &lt;NA&gt;  Mean Bedrock Dep… Mean depth (cm)… Cent…    56
-#&gt; 6 Soils        agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    28
+#&gt; 1 Anthropogen… agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    10
+#&gt; 2 Natural      al2o3… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
+#&gt; 3 Base         areas… Ws    &lt;NA&gt;  Watershed Area S… Watershed area … Squa…    NA
+#&gt; 4 Natural      bfi[A… Cat,… &lt;NA&gt;  Base Flow Index   Base flow is th… Perc…    12
+#&gt; 5 Anthropogen… canal… Cat,… &lt;NA&gt;  Canal Density     Density of NHDP… Kilo…    13
+#&gt; 6 Natural      cao[A… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
 #&gt; # ℹ 5 more variables: dataset &lt;chr&gt;, source_name &lt;chr&gt;, source_URL &lt;chr&gt;,
 #&gt; #   ACTIVE &lt;dbl&gt;, DSNAME &lt;chr&gt;</code></pre>
 <p>Look up the display name or names for a metric using the

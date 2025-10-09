@@ -6,6 +6,7 @@
 [![cran checks](https://badges.cranchecks.info/worst/StreamCatTools.svg)](https://cran.r-project.org/web/checks/check_results_StreamCatTools.html)
 [![R-CMD-check](https://github.com/USEPA/StreamCatTools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/USEPA/StreamCatTools/actions/workflows/R-CMD-check.yaml)
 [![Downloads](https://cranlogs.r-pkg.org/badges/StreamCatTools)](https://cran.r-project.org/package=StreamCatTools)
+[![CodeCov](https://img.shields.io/badge/test%20coverage-86.9%25-388600.svg)](https://img.shields.io/badge/test%20coverage-86.9%25-388600.svg)
 <!-- badges: end -->
 
 ## StreamCatTools: Tools to work with the [StreamCat](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-dataset) API within R and access the full suite of StreamCat and [LakeCat](https://www.epa.gov/national-aquatic-resource-surveys/lakecat-dataset) metrics.
@@ -14,8 +15,6 @@
 `StreamCatTools` is an R package for accessing [StreamCat](https://www.epa.gov/national-aquatic-resource-surveys/streamcat-dataset) and [LakeCat](https://www.epa.gov/national-aquatic-resource-surveys/lakecat-dataset) data via the [StreamCat API](https://usepa.github.io/StreamCatWebServices_Public/#/) and for working with site data in conjunction with StreamCat and NHDPlus. 
 
 ### Installation
-
-## Installation
 
 You can install and load the most recent approved version from CRAN by running
 
