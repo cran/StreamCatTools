@@ -1560,7 +1560,7 @@ head(var_info)
 #&gt; 2 Anthropogen… NABD_… Cat,… &lt;NA&gt;  NABD NID Reservo… Volume all rese… Cubi…    33
 #&gt; 3 Anthropogen… NABD_… Cat,… &lt;NA&gt;  NABD Normal Rese… Volume all rese… Cubi…    33
 #&gt; 4 Natural      Preci… Cat,… &lt;NA&gt;  Surplus Precipit… This dataset re… Kilo…    75
-#&gt; 5 Natural      Rckde… Cat,… &lt;NA&gt;  Mean Bedrock Dep… Mean depth (cm)… Cent…    56
+#&gt; 5 Soils        Rckde… Cat,… &lt;NA&gt;  Mean Bedrock Dep… Mean depth (cm)… Cent…    56
 #&gt; 6 Soils        agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    28
 #&gt; # ℹ 5 more variables: dataset &lt;chr&gt;, source_name &lt;chr&gt;, source_URL &lt;chr&gt;,
 #&gt; #   ACTIVE &lt;dbl&gt;, DSNAME &lt;chr&gt;</code></pre>
@@ -1579,25 +1579,43 @@ abbreviations and names, and the same information for counties as well
 using <code>sc_get_params</code>:</p>
 <pre class="r"><code>states &lt;- sc_get_params(param=&#39;state&#39;)
 head(states)
-#&gt;   st_fips st_abbr     st_name
-#&gt; 1      01      AL     Alabama
-#&gt; 2      04      AZ     Arizona
-#&gt; 3      05      AR    Arkansas
-#&gt; 4      06      CA  California
-#&gt; 5      08      CO    Colorado
-#&gt; 6      09      CT Connecticut</code></pre>
+#&gt;    st_fips st_abbr     st_name
+#&gt; 30      01      AL     Alabama
+#&gt; 8       04      AZ     Arizona
+#&gt; 25      05      AR    Arkansas
+#&gt; 6       06      CA  California
+#&gt; 15      08      CO    Colorado
+#&gt; 50      09      CT Connecticut</code></pre>
 <pre class="r"><code>counties &lt;- sc_get_params(param=&#39;county&#39;)
 head(counties)
-#&gt;    fips state    county_name
-#&gt; 1 01001    AL Autauga County
-#&gt; 2 01003    AL Baldwin County
-#&gt; 3 01005    AL Barbour County
-#&gt; 4 01007    AL    Bibb County
-#&gt; 5 01009    AL  Blount County
-#&gt; 6 01011    AL Bullock County</code></pre>
+#&gt;      fips state    county_name
+#&gt; 752 01001    AL Autauga County
+#&gt; 713 01003    AL Baldwin County
+#&gt; 655 01005    AL Barbour County
+#&gt; 755 01007    AL    Bibb County
+#&gt; 748 01009    AL  Blount County
+#&gt; 656 01011    AL Bullock County</code></pre>
 </div>
-<div id="get-data-for-comids" class="section level2" number="5">
-<h2><span class="header-section-number">5</span> Get data for
+<div id="filter-metric-information-by-criteria" class="section level2" number="5">
+<h2><span class="header-section-number">5</span> Filter metric
+information by criteria</h2>
+<p>We can also filter metric names and information by the metric
+year(s), the indicator categories for metrics, the metric data set
+names, or the Areas of Interest the metrics are available for.</p>
+<pre class="r"><code>metrics &lt;- sc_get_metric_names(category = c(&#39;Deposition&#39;,&#39;Climate&#39;),aoi=c(&#39;Cat&#39;,&#39;Ws&#39;))
+head(metrics)
+#&gt; # A tibble: 6 × 9
+#&gt;   Category Metric AOI   Year  Short_Name Metric_Description Units Source Dataset
+#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+#&gt; 1 Climate  bfi[A… Cat,… &lt;NA&gt;  Base Flow… Base flow is the … Perc… USGS … Base F…
+#&gt; 2 Deposit… inorg… Cat,… 2008  Mean Annu… Annual gradient m… Kilo… NADP   NADP   
+#&gt; 3 Deposit… nh4[Y… Cat,… 2008  Mean annu… Annual gradient m… Kilo… NADP   NADP   
+#&gt; 4 Deposit… no3[Y… Cat,… 2008  Mean Annu… Annual gradient m… Kilo… NADP   NADP   
+#&gt; 5 Climate  preci… Cat,… &lt;NA&gt;  30-year M… PRISM climate dat… Mill… PRISM  PRISM  
+#&gt; 6 Climate  preci… Cat,… 1991… 30-year M… PRISM climate dat… Mill… PRISM  PRISM</code></pre>
+</div>
+<div id="get-data-for-comids" class="section level2" number="6">
+<h2><span class="header-section-number">6</span> Get data for
 COMIDs</h2>
 <p>In this example we access several variables, for several areas of
 interest, and for several COMIDs using the <code>sc_get_data</code>
@@ -1656,8 +1674,8 @@ knitr::kable(df)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-data-for-county" class="section level2" number="6">
-<h2><span class="header-section-number">6</span> Get data for
+<div id="get-data-for-county" class="section level2" number="7">
+<h2><span class="header-section-number">7</span> Get data for
 county</h2>
 <p>In this example we access a couple variables at the watershed scale
 for the area of interest of a county (Benton County in this case) using
@@ -1699,8 +1717,8 @@ knitr::kable(head(df))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-all-metrics-for-comids-or-an-area-of-interest" class="section level2" number="7">
-<h2><span class="header-section-number">7</span> Get all metrics for
+<div id="get-all-metrics-for-comids-or-an-area-of-interest" class="section level2" number="8">
+<h2><span class="header-section-number">8</span> Get all metrics for
 COMIDs or an Area of Interest</h2>
 <p>We can also get all StreamCat metrics for a set of COMIDs or an area
 of interest. <strong>Please do not request metric=‘all’ and aoi=‘conus’
@@ -3561,8 +3579,8 @@ knitr::kable(head(df))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-nlcd-data" class="section level2" number="8">
-<h2><span class="header-section-number">8</span> Get NLCD data</h2>
+<div id="get-nlcd-data" class="section level2" number="9">
+<h2><span class="header-section-number">9</span> Get NLCD data</h2>
 <p>In this example we access National Land Cover Dataset (NLCD) data for
 2001, just at the catchment level for several COMIDs using the
 <code>sc_nlcd</code> function. Loads data into a tibble we can view.</p>
@@ -3962,8 +3980,8 @@ knitr::kable(head(df))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-comids" class="section level2" number="9">
-<h2><span class="header-section-number">9</span> Get COMIDs</h2>
+<div id="get-comids" class="section level2" number="10">
+<h2><span class="header-section-number">10</span> Get COMIDs</h2>
 <p>In this example we use the <code>sc_get_comid</code> function to find
 COMIDs for USGS stream gages we load into R. We use a .csv file with
 coordinate columns and a known coordinate reference system.</p>
@@ -3979,8 +3997,8 @@ df$COMID &lt;- as.character(df$comid)
 gages &lt;- dplyr::left_join(gages, df, by=&#39;COMID&#39;)
 knitr::kable(head(gages))</code></pre>
 </div>
-<div id="get-data-for-a-hydroregion" class="section level2" number="10">
-<h2><span class="header-section-number">10</span> Get data for a
+<div id="get-data-for-a-hydroregion" class="section level2" number="11">
+<h2><span class="header-section-number">11</span> Get data for a
 hydroregion</h2>
 <p>In this example we access a couple watershed-only metrics for a
 particular NHDPlus hydroregion using the <code>sc_get_data</code>
@@ -4022,8 +4040,8 @@ knitr::kable(head(df))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-data-for-conus" class="section level2" number="11">
-<h2><span class="header-section-number">11</span> Get data for
+<div id="get-data-for-conus" class="section level2" number="12">
+<h2><span class="header-section-number">12</span> Get data for
 CONUS</h2>
 <p>In this example we access a metric for conus using the
 <code>sc_get_data</code> function - this is shown for demonstration but

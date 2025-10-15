@@ -1546,10 +1546,10 @@ head(var_info)
 #&gt; # A tibble: 6 × 13
 #&gt;   category     metric aoi   year  short_description long_description units  dsid
 #&gt;   &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt; &lt;dbl&gt;
-#&gt; 1 Anthropogen… agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    10
+#&gt; 1 Soils        agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    10
 #&gt; 2 Natural      al2o3… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
 #&gt; 3 Base         areas… Ws    &lt;NA&gt;  Watershed Area S… Watershed area … Squa…    NA
-#&gt; 4 Natural      bfi[A… Cat,… &lt;NA&gt;  Base Flow Index   Base flow is th… Perc…    12
+#&gt; 4 Climate      bfi[A… Cat,… &lt;NA&gt;  Base Flow Index   Base flow is th… Perc…    12
 #&gt; 5 Anthropogen… canal… Cat,… &lt;NA&gt;  Canal Density     Density of NHDP… Kilo…    13
 #&gt; 6 Natural      cao[A… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
 #&gt; # ℹ 5 more variables: dataset &lt;chr&gt;, source_name &lt;chr&gt;, source_URL &lt;chr&gt;,
@@ -1566,8 +1566,26 @@ fullname
 #&gt; [1] &quot;Deciduous Forest Percentage 2019&quot;                   
 #&gt; [2] &quot;Synthetic Nitrogen Fertilizer Application Mean Rate&quot;</code></pre>
 </div>
-<div id="get-waterbody-comids" class="section level2" number="3">
-<h2><span class="header-section-number">3</span> Get Waterbody
+<div id="filter-metric-information-by-criteria" class="section level2" number="3">
+<h2><span class="header-section-number">3</span> Filter metric
+information by criteria</h2>
+<p>We can also filter metric names and information by the metric
+year(s), the indicator categories for metrics, the metric data set
+names, or the Areas of Interest the metrics are available for.</p>
+<pre class="r"><code>metrics &lt;- lc_get_metric_names(category = c(&#39;Anthropogenic&#39;,&#39;Natural&#39;), aoi=c(&#39;Cat&#39;,&#39;Ws&#39;))
+head(metrics)
+#&gt; # A tibble: 6 × 9
+#&gt;   Category Metric AOI   Year  Short_Name Metric_Description Units Source Dataset
+#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+#&gt; 1 Natural  al2o3… Cat,… &lt;NA&gt;  Mean Lith… Mean % of litholo… Perc… USGS … USGS G…
+#&gt; 2 Anthrop… canal… Cat,… &lt;NA&gt;  Canal Den… Density of NHDPlu… Kilo… Falco… Canal …
+#&gt; 3 Natural  cao[A… Cat,… &lt;NA&gt;  Mean Lith… Mean % of litholo… Perc… USGS … USGS G…
+#&gt; 4 Anthrop… cbnf[… Cat,… &lt;NA&gt;  Cultivate… Mean rate of biol… Kilo… Envir… Agricu…
+#&gt; 5 Anthrop… coalm… Cat,… &lt;NA&gt;  Coal Mine… Density of coal m… Coun… USGS … Coal M…
+#&gt; 6 Natural  comps… Cat,… &lt;NA&gt;  Mean Lith… Mean lithological… Perc… USGS … USGS G…</code></pre>
+</div>
+<div id="get-waterbody-comids" class="section level2" number="4">
+<h2><span class="header-section-number">4</span> Get Waterbody
 COMIDs</h2>
 <p>In this example we use the <code>lc_get_comid</code> function to find
 COMIDs for a set of example lake locations we load into
@@ -1581,8 +1599,8 @@ get LakeCat metrics for these lakes as we show in after this.</p>
     
 comids &lt;- lc_get_comid(dd)</code></pre>
 </div>
-<div id="get-data-for-comids" class="section level2" number="4">
-<h2><span class="header-section-number">4</span> Get data for
+<div id="get-data-for-comids" class="section level2" number="5">
+<h2><span class="header-section-number">5</span> Get data for
 COMIDs</h2>
 <p>In this example we access several variables, for several areas of
 interest, and for several COMIDs using the <code>lc_get_data</code>
@@ -1663,8 +1681,8 @@ knitr::kable(df)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-data-for-county" class="section level2" number="5">
-<h2><span class="header-section-number">5</span> Get data for
+<div id="get-data-for-county" class="section level2" number="6">
+<h2><span class="header-section-number">6</span> Get data for
 county</h2>
 <p>In this example we access a couple variables at the watershed scale
 for the area of interest of a county (Benton County in this case) using
@@ -1706,8 +1724,8 @@ knitr::kable(head(df))</code></pre>
 </tbody>
 </table>
 </div>
-<div id="get-nlcd-data" class="section level2" number="6">
-<h2><span class="header-section-number">6</span> Get NLCD data</h2>
+<div id="get-nlcd-data" class="section level2" number="7">
+<h2><span class="header-section-number">7</span> Get NLCD data</h2>
 <p>In this example we access National Land Cover Dataset (NLCD) data for
 2019, just at the catchment level for several COMIDs using the
 <code>lc_nlcd</code> function. Loads data into a tibble we can view.</p>

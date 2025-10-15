@@ -47,6 +47,10 @@ head(states)
 counties <- sc_get_params(param='county')
 head(counties)
 
+## ----get_metric_names---------------------------------------------------------
+metrics <- sc_get_metric_names(category = c('Deposition','Climate'),aoi=c('Cat','Ws'))
+head(metrics)
+
 ## ----get_data-----------------------------------------------------------------
 df <- sc_get_data(metric='pcturbmd2006,damdens,tridens', aoi='rp100cat,cat,ws', comid='179,1337,1337420')
 knitr::kable(df)

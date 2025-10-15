@@ -33,6 +33,10 @@ metric=c('pctdecid2019','fert')
 fullname <- lc_fullname(metric)
 fullname
 
+## ----get_metric_names---------------------------------------------------------
+metrics <- lc_get_metric_names(category = c('Anthropogenic','Natural'), aoi=c('Cat','Ws'))
+head(metrics)
+
 ## ----comids, warning=FALSE, message=FALSE-------------------------------------
 dd <- data.frame(x = c(-89.198,-114.125,-122.044),
                  y = c(45.502,47.877,43.730)) |> 
