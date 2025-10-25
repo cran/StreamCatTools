@@ -11,7 +11,7 @@
 
 
 
-<title>Working with LakeCat data</title>
+<title>Start Here</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1501,337 +1501,81 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Working with LakeCat data</h1>
+<h1 class="title toc-ignore">Start Here</h1>
 
 </div>
 
 
-<div id="accessing-and-working-with-lakecat" class="section level2" number="1">
-<h2><span class="header-section-number">1</span> Accessing and working
-with <a href="https://www.epa.gov/national-aquatic-resource-surveys/lakecat-dataset">LakeCat</a></h2>
+<div id="installing-and-loading-streamcattools" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Installing and
+loading StreamCatTools</h2>
+<p>To install, you can install from CRAN:</p>
+<pre class="r"><code>install.packages(&quot;StreamCatTools&quot;)</code></pre>
+<p>Or you can install from GitHub:</p>
+<pre class="r"><code>library(devtools)
+install_github(&#39;USEPA/StreamCatTools&#39;)</code></pre>
+<p>After installing load the library</p>
+<pre class="r"><code>library(StreamCatTools)</code></pre>
+</div>
+<div id="background" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Background</h2>
 <p>The <code>StreamCatTools</code> package was designed to simplify the
 use of <a href="https://www.epa.gov/national-aquatic-resource-surveys/streamcat-dataset">StreamCat</a>
 data in R, leveraging the new <a href="https://api.epa.gov/StreamCat/streams/metrics">API for
-StreamCat</a>. We now have functionality in the <a href="https://api.epa.gov/StreamCat/streams/metrics">StreamCat API</a>
-for accessing and working with LakeCat data and have added functions in
-<code>StreamCatTools</code> to access LakeCata data in R using the
-API.</p>
-<p>We can actually pull data into R from LakeCat by simply passing a URL
-to extract from json. We have to hard-wire parameters and are limited in
-the number of records returned through a <code>GET</code> request.</p>
-<pre class="r"><code>res &lt;- jsonlite::fromJSON(&quot;https://api.epa.gov/StreamCat/lakes/metrics?name=pcturbmd2006&amp;areaOfInterest=cat&amp;comid=22538788&quot;)
-res$items</code></pre>
+StreamCat</a>.</p>
 </div>
-<div id="list-lakecat-api-parameters" class="section level2" number="2">
-<h2><span class="header-section-number">2</span> List LakeCat API
-parameters</h2>
-<p>List LakeCat parameters: Get a list of available LakeCat values for
-certain parameters using the <code>lc_get_params</code> function (right
-now just metric names and areas of interest for this function) via the
-API</p>
-<pre class="r"><code>library(StreamCatTools)
-region_params &lt;- lc_get_params(param=&#39;aoi&#39;)
-
-name_params &lt;- lc_get_params(param=&#39;metric_names&#39;)
-
-print(paste0(&#39;region parameters are: &#39;, paste(region_params,collapse = &#39;, &#39;)))
-#&gt; [1] &quot;region parameters are: cat, ws&quot;
-print(paste0(&#39;A selection of available LakrCat metrics include: &#39;,paste(name_params[1:10],collapse = &#39;, &#39;)))
-#&gt; [1] &quot;A selection of available LakrCat metrics include: agkffact, al2o3, bfi, canaldens, cao, cbnf, clay, coalminedens, compstrgth, damdens&quot;</code></pre>
-<p>We can also see what metrics are available for what areas of interest
-and what years using the <code>sc_get_params</code> function (which
-returns a tibble of information about StreamCat metrics):</p>
-<pre class="r"><code>var_info &lt;- lc_get_params(param=&#39;variable_info&#39;)
-head(var_info)
-#&gt; # A tibble: 6 × 13
-#&gt;   category     metric aoi   year  short_description long_description units  dsid
-#&gt;   &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt; &lt;dbl&gt;
-#&gt; 1 Soils        agkff… Cat,… &lt;NA&gt;  Ag Soil Erodibil… Mean of STATSGO… Unit…    10
-#&gt; 2 Natural      al2o3… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
-#&gt; 3 Base         areas… Ws    &lt;NA&gt;  Watershed Area S… Watershed area … Squa…    NA
-#&gt; 4 Climate      bfi[A… Cat,… &lt;NA&gt;  Base Flow Index   Base flow is th… Perc…    12
-#&gt; 5 Anthropogen… canal… Cat,… &lt;NA&gt;  Canal Density     Density of NHDP… Kilo…    13
-#&gt; 6 Natural      cao[A… Cat,… &lt;NA&gt;  Mean Lithologica… Mean % of litho… Perc…    11
-#&gt; # ℹ 5 more variables: dataset &lt;chr&gt;, source_name &lt;chr&gt;, source_URL &lt;chr&gt;,
-#&gt; #   ACTIVE &lt;dbl&gt;, DSNAME &lt;chr&gt;</code></pre>
-<p>Look up the display name or names for a metric using the
-<code>lc_fullname</code> function via the API</p>
-<pre class="r"><code>metric=&#39;pcthbwet2016&#39;
-fullname &lt;- lc_fullname(metric)
-fullname
-#&gt; [1] &quot;Herbaceous Wetland Percentage 2016&quot;</code></pre>
-<pre class="r"><code>metric=c(&#39;pctdecid2019&#39;,&#39;fert&#39;)
-fullname &lt;- lc_fullname(metric)
-fullname
-#&gt; [1] &quot;Deciduous Forest Percentage 2019&quot;                   
-#&gt; [2] &quot;Synthetic Nitrogen Fertilizer Application Mean Rate&quot;</code></pre>
+<div id="vignettes-in-streamcattools" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Vignettes in
+<code>StreamCatTools</code></h1>
+<p>There are three additional vignettes in <code>StreamCatTools</code>
+that are available on our website <a href="https://usepa.github.io/StreamCatTools/">here</a> under the
+“Articles” tab:</p>
+<ol style="list-style-type: decimal">
+<li>Introduction</li>
+</ol>
+<ul>
+<li>An overview of the basic fucntionality of the package</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>LakeCat</li>
+</ol>
+<ul>
+<li>An overview of accessing data for lakes within the package and
+functions to do so</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Applications</li>
+</ol>
+<ul>
+<li>A more in depth walk through with specific use-case examples and
+demonstrations</li>
+</ul>
+<p>These vignettes cover some of the core functions (and arguments
+within those functions) in <code>StreamCatTools</code>. Help files for a
+particular function are viewable by running <code>?function_name</code>
+after loading <code>StreamCatTools</code>. For example, to learn more
+about the <code>sc_get_data()</code> function, run
+<code>?sc-get_data</code>.</p>
 </div>
-<div id="filter-metric-information-by-criteria" class="section level2" number="3">
-<h2><span class="header-section-number">3</span> Filter metric
-information by criteria</h2>
-<p>We can also filter metric names and information by the metric
-year(s), the indicator categories for metrics, the metric data set
-names, or the Areas of Interest the metrics are available for.</p>
-<pre class="r"><code>metrics &lt;- lc_get_metric_names(category = c(&#39;Anthropogenic&#39;,&#39;Natural&#39;), aoi=c(&#39;Cat&#39;,&#39;Ws&#39;))
-head(metrics)
-#&gt; # A tibble: 6 × 9
-#&gt;   Category Metric AOI   Year  Short_Name Metric_Description Units Source Dataset
-#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-#&gt; 1 Natural  al2o3… Cat,… &lt;NA&gt;  Mean Lith… Mean % of litholo… Perc… USGS … USGS G…
-#&gt; 2 Anthrop… canal… Cat,… &lt;NA&gt;  Canal Den… Density of NHDPlu… Kilo… Falco… Canal …
-#&gt; 3 Natural  cao[A… Cat,… &lt;NA&gt;  Mean Lith… Mean % of litholo… Perc… USGS … USGS G…
-#&gt; 4 Anthrop… cbnf[… Cat,… &lt;NA&gt;  Cultivate… Mean rate of biol… Kilo… Envir… Agricu…
-#&gt; 5 Anthrop… coalm… Cat,… &lt;NA&gt;  Coal Mine… Density of coal m… Coun… USGS … Coal M…
-#&gt; 6 Natural  comps… Cat,… &lt;NA&gt;  Mean Lith… Mean lithological… Perc… USGS … USGS G…</code></pre>
-</div>
-<div id="get-waterbody-comids" class="section level2" number="4">
-<h2><span class="header-section-number">4</span> Get Waterbody
-COMIDs</h2>
-<p>In this example we use the <code>lc_get_comid</code> function to find
-COMIDs for a set of example lake locations we load into
-R.<code>lc_get_comid</code> is just a simple wrapper for
-<code>get_waterbodies</code> in the <a href="https://doi-usgs.github.io/nhdplusTools/">nhdplusTools</a> R
-package. We can then use the COMIDs we derive for our lake locations to
-get LakeCat metrics for these lakes as we show in after this.</p>
-<pre class="r"><code>dd &lt;- data.frame(x = c(-89.198,-114.125,-122.044),
-                 y = c(45.502,47.877,43.730)) |&gt; 
-  sf::st_as_sf(coords = c(&#39;x&#39;, &#39;y&#39;), crs = 4326)
-    
-comids &lt;- lc_get_comid(dd)</code></pre>
-</div>
-<div id="get-data-for-comids" class="section level2" number="5">
-<h2><span class="header-section-number">5</span> Get data for
-COMIDs</h2>
-<p>In this example we access several variables, for several areas of
-interest, and for several COMIDs using the <code>lc_get_data</code>
-function. We’ll show using both the COMIDS we derived with
-<code>lc_get_comid</code> function in previous chunk as well as with
-known COMIDS for NHDPlus waterbodies. Loads data into a tibble we can
-view.</p>
-<pre class="r"><code>df &lt;- lc_get_data(metric=&#39;pcturbmd2006,damdens&#39;, aoi=&#39;cat,ws&#39;, comid=comids)
-knitr::kable(df)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">comid</th>
-<th align="right">damdenscat</th>
-<th align="right">damdensws</th>
-<th align="right">pcturbmd2006cat</th>
-<th align="right">pcturbmd2006ws</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">23756298</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0293228</td>
-<td align="right">0.0293228</td>
-</tr>
-<tr class="even">
-<td align="right">120054065</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0007270</td>
-<td align="right">0.4348181</td>
-<td align="right">0.1451495</td>
-</tr>
-<tr class="odd">
-<td align="right">167120863</td>
-<td align="right">0.0243986</td>
-<td align="right">0.0243986</td>
-<td align="right">0.2086078</td>
-<td align="right">0.2086078</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>df &lt;- lc_get_data(metric=&#39;pcturbmd2006,damdens&#39;, aoi=&#39;cat,ws&#39;, comid=&#39;23783629,23794487,23812618&#39;)
-knitr::kable(df)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">comid</th>
-<th align="right">damdenscat</th>
-<th align="right">damdensws</th>
-<th align="right">pcturbmd2006cat</th>
-<th align="right">pcturbmd2006ws</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">23783629</td>
-<td align="right">0.0192097</td>
-<td align="right">0.0008875</td>
-<td align="right">0.2091942</td>
-<td align="right">0.0213267</td>
-</tr>
-<tr class="even">
-<td align="right">23794487</td>
-<td align="right">0.0000000</td>
-<td align="right">0.2433268</td>
-<td align="right">0.1958225</td>
-<td align="right">0.8832762</td>
-</tr>
-<tr class="odd">
-<td align="right">23812618</td>
-<td align="right">0.0320852</td>
-<td align="right">0.0071455</td>
-<td align="right">0.0115507</td>
-<td align="right">0.0032155</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="get-data-for-county" class="section level2" number="6">
-<h2><span class="header-section-number">6</span> Get data for
-county</h2>
-<p>In this example we access a couple variables at the watershed scale
-for the area of interest of a county (Benton County in this case) using
-the <code>sc_get_data</code> function.</p>
-<pre class="r"><code>df &lt;- lc_get_data(metric=&#39;pctwdwet2006&#39;, aoi=&#39;ws&#39;, county=&#39;41003&#39;)
-knitr::kable(head(df))</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">comid</th>
-<th align="right">pctwdwet2006ws</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">23768945</td>
-<td align="right">0.1662971</td>
-</tr>
-<tr class="even">
-<td align="right">23768987</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="right">23888156</td>
-<td align="right">0.4161465</td>
-</tr>
-<tr class="even">
-<td align="right">23768895</td>
-<td align="right">0.1344990</td>
-</tr>
-<tr class="odd">
-<td align="right">23769007</td>
-<td align="right">1.0194538</td>
-</tr>
-<tr class="even">
-<td align="right">23768947</td>
-<td align="right">0.5524862</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="get-nlcd-data" class="section level2" number="7">
-<h2><span class="header-section-number">7</span> Get NLCD data</h2>
-<p>In this example we access National Land Cover Dataset (NLCD) data for
-2019, just at the catchment level for several COMIDs using the
-<code>lc_nlcd</code> function. Loads data into a tibble we can view.</p>
-<pre class="r"><code>df &lt;- lc_nlcd(comid=&#39;23783629,23794487,23812618&#39;, year=&#39;2019&#39;, aoi=&#39;ws&#39;)
-knitr::kable(df)</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="3%" />
-<col width="5%" />
-<col width="6%" />
-<col width="5%" />
-<col width="6%" />
-<col width="5%" />
-<col width="5%" />
-<col width="6%" />
-<col width="5%" />
-<col width="6%" />
-<col width="5%" />
-<col width="5%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="right">comid</th>
-<th align="right">pctbl2019ws</th>
-<th align="right">pctconif2019ws</th>
-<th align="right">pctcrop2019ws</th>
-<th align="right">pctdecid2019ws</th>
-<th align="right">pctgrs2019ws</th>
-<th align="right">pcthay2019ws</th>
-<th align="right">pcthbwet2019ws</th>
-<th align="right">pctice2019ws</th>
-<th align="right">pctmxfst2019ws</th>
-<th align="right">pctow2019ws</th>
-<th align="right">pctshrb2019ws</th>
-<th align="right">pcturbhi2019ws</th>
-<th align="right">pcturblo2019ws</th>
-<th align="right">pcturbmd2019ws</th>
-<th align="right">pcturbop2019ws</th>
-<th align="right">pctwdwet2019ws</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">23783629</td>
-<td align="right">1.5601274</td>
-<td align="right">82.8417931</td>
-<td align="right">0.00000</td>
-<td align="right">0.0627022</td>
-<td align="right">3.3679487</td>
-<td align="right">0.0007988</td>
-<td align="right">0.0228444</td>
-<td align="right">0.2318785</td>
-<td align="right">0.1064740</td>
-<td align="right">1.500061</td>
-<td align="right">9.2003748</td>
-<td align="right">0.0027956</td>
-<td align="right">0.0838692</td>
-<td align="right">0.0232438</td>
-<td align="right">0.8217587</td>
-<td align="right">0.1733297</td>
-</tr>
-<tr class="even">
-<td align="right">23794487</td>
-<td align="right">0.0000000</td>
-<td align="right">0.4014892</td>
-<td align="right">31.64465</td>
-<td align="right">1.8176509</td>
-<td align="right">0.1167968</td>
-<td align="right">42.3096576</td>
-<td align="right">11.9132783</td>
-<td align="right">0.0000000</td>
-<td align="right">3.0878166</td>
-<td align="right">1.744653</td>
-<td align="right">0.2043945</td>
-<td align="right">0.2627929</td>
-<td align="right">3.6718009</td>
-<td align="right">1.0146726</td>
-<td align="right">1.6351559</td>
-<td align="right">0.1751953</td>
-</tr>
-<tr class="odd">
-<td align="right">23812618</td>
-<td align="right">0.0006431</td>
-<td align="right">84.9302559</td>
-<td align="right">0.00000</td>
-<td align="right">0.0623806</td>
-<td align="right">0.9241336</td>
-<td align="right">0.0000000</td>
-<td align="right">0.5498498</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0032155</td>
-<td align="right">4.111976</td>
-<td align="right">5.2984945</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0533772</td>
-<td align="right">0.0032155</td>
-<td align="right">1.8714187</td>
-<td align="right">2.1910391</td>
-</tr>
-</tbody>
-</table>
+<div id="citation-information" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Citation
+information</h1>
+<p>If you use <code>StreamCatTools</code> in your work, please cite it.
+You can view the most recent citation by running</p>
+<pre class="r"><code>citation(&quot;StreamCatTools&quot;)
+#&gt; To cite package &#39;StreamCatTools&#39; in publications use:
+#&gt; 
+#&gt;   Weber M (????). _StreamCatTools: &#39;StreamCatTools&#39;_. R package version
+#&gt;   0.9.1, &lt;https://usepa.github.io/StreamCatTools/&gt;.
+#&gt; 
+#&gt; A BibTeX entry for LaTeX users is
+#&gt; 
+#&gt;   @Manual{,
+#&gt;     title = {StreamCatTools: &#39;StreamCatTools&#39;},
+#&gt;     author = {Marc Weber},
+#&gt;     note = {R package version 0.9.1},
+#&gt;     url = {https://usepa.github.io/StreamCatTools/},
+#&gt;   }</code></pre>
 </div>
 
 
