@@ -1,7 +1,7 @@
 Package: StreamCatTools
 Type: Package
 Title: 'StreamCatTools'
-Version: 0.9.1
+Version: 0.10.0
 Authors@R: c(person(given = "Marc", 
                     family = "Weber", 
                     role = c("aut", "cre"), 
@@ -10,6 +10,10 @@ Authors@R: c(person(given = "Marc",
                     family = "Hill",
                     role = "ctb",
                     email = "hill.ryan@epa.gov"),
+             person(given = "Selia",
+                    family = "Markley",
+                    role = "ctb",
+                    email = "markley.selia@epa.gov"),
              person(given = "Travis",
                     family = "Hudson",
                     role = "ctb",
@@ -34,9 +38,10 @@ Description: Tools for using the 'StreamCat' and 'LakeCat' API and
              Convenience functions in the package wrap the API for 'StreamCat' 
              on <https://api.epa.gov/StreamCat/streams/metrics>.
 Depends: R (>= 4.1.0)
-Imports: sf, nhdplusTools, jsonlite, httr2, curl (>= 6.0.0)
-Suggests: dplyr, ggplot2, mapview, testthat, knitr, rmarkdown,
-        devtools, xml2, magrittr, readr, tidyr, stringr, purrr
+Imports: sf, nhdplusTools, jsonlite, httr2, curl (>= 6.0.0), ggpattern,
+        patchwork, cowplot, tigris, ggplot2
+Suggests: dplyr, mapview, testthat, knitr, rmarkdown, devtools, xml2,
+        magrittr, readr, tidyr, stringr, purrr, lifecycle, tidyselect
 Encoding: UTF-8
 URL: https://usepa.github.io/StreamCatTools/,
         https://github.com/USEPA/StreamCatTools
@@ -45,9 +50,10 @@ VignetteBuilder: knitr,rmarkdown
 RoxygenNote: 7.3.3
 License: CC0
 NeedsCompilation: no
-Packaged: 2025-10-24 23:48:29 UTC; mwebe
+Packaged: 2026-01-30 21:46:10 UTC; mweber
 Author: Marc Weber [aut, cre],
   Ryan Hill [ctb],
+  Selia Markley [ctb],
   Travis Hudson [ctb],
   Allen Brookes [ctb],
   David Rebhuhn [ctb],
@@ -55,4 +61,4 @@ Author: Marc Weber [aut, cre],
   Zachary Smith [ctb]
 Maintainer: Marc Weber <weber.marc@epa.gov>
 Repository: CRAN
-Date/Publication: 2025-10-25 07:30:22 UTC
+Date/Publication: 2026-01-30 22:02:05 UTC
