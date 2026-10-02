@@ -1,26 +1,27 @@
 Package: StreamCatTools
 Type: Package
-Title: 'StreamCatTools'
-Version: 0.11.0
+Title: Tools for Working with 'StreamCat' and 'LakeCat' Data
+Version: 0.12.0
+Date: 2026-09-23
 Authors@R: c(person(given = "Marc", 
                     family = "Weber", 
                     role = c("aut", "cre"), 
                     email = "weber.marc@epa.gov"),
              person(given = "Ryan",
                     family = "Hill",
-                    role = "ctb",
+                    role = "aut",
                     email = "hill.ryan@epa.gov"),
              person(given = "Selia",
                     family = "Markley",
-                    role = "ctb",
+                    role = "aut",
                     email = "markley.selia@epa.gov"),
              person(given = "Travis",
                     family = "Hudson",
-                    role = "ctb",
+                    role = "aut",
                     email = "travish1842@gmail.com"),
              person(given = "Allen",
                     family = "Brookes",
-                    role = "ctb",
+                    role = "aut",
                     email = "brookes.allen@epa.gov"),
              person(given = "David",
                     family = "Rebhuhn",
@@ -36,35 +37,36 @@ Authors@R: c(person(given = "Marc",
                     email = "bousquin.justin@epa.gov"),
              person(given = "Zachary",
                     family = "Smith",
-                    role = "ctb"))       
-Description: Tools for using the 'StreamCat' and 'LakeCat' API and 
-             interacting with the 'StreamCat' and 'LakeCat' database. 
-             Convenience functions in the package wrap the API for 'StreamCat' 
-             on <https://api.epa.gov/StreamCat/streams/metrics>.
-Depends: R (>= 4.1.0)
-Imports: sf, nhdplusTools, jsonlite, httr2, curl (>= 6.0.0), ggpattern,
-        patchwork, cowplot, tigris, ggplot2,
-Suggests: dplyr, mapview, testthat, knitr, rmarkdown, devtools, xml2,
-        magrittr, readr, tidyr, stringr, purrr, lifecycle, tidyselect,
-        DBI, duckdb, tictoc, stats, wk
-Encoding: UTF-8
-URL: https://usepa.github.io/StreamCatTools/,
-        https://github.com/USEPA/StreamCatTools
-BugReports: https://github.com/USEPA/StreamCatTools/issues
-VignetteBuilder: knitr,rmarkdown
-RoxygenNote: 7.3.3
-License: CC0
-NeedsCompilation: no
-Packaged: 2026-05-14 21:41:57 UTC; mweber
+                    role = "ctb"))
 Author: Marc Weber [aut, cre],
-  Ryan Hill [ctb],
-  Selia Markley [ctb],
-  Travis Hudson [ctb],
-  Allen Brookes [ctb],
+  Ryan Hill [aut],
+  Selia Markley [aut],
+  Travis Hudson [aut],
+  Allen Brookes [aut],
   David Rebhuhn [ctb],
   Michael Dumelle [ctb],
   Justin Bousquin [ctb],
   Zachary Smith [ctb]
 Maintainer: Marc Weber <weber.marc@epa.gov>
+Description: Tools for using the 'StreamCat' and 'LakeCat' API and 
+             interacting with the 'StreamCat' and 'LakeCat' database. 
+             Convenience functions in the package wrap the API for 'StreamCat' 
+             on <https://api.epa.gov/StreamCat/streams/metrics>.
+Depends: R (>= 4.1.0)
+Imports: sf, hydrogeofetch, jsonlite, httr2, curl (>= 6.0.0),
+        ggpattern, patchwork, cowplot, tigris, ggplot2, dplyr, tidyr,
+        stringr, tibble,
+Suggests: mapview, testthat, knitr, rmarkdown, devtools, xml2,
+        magrittr, readr, purrr, lifecycle, tidyselect, DBI, duckdb,
+        tictoc, stats, wk
+Encoding: UTF-8
+URL: https://usepa.github.io/StreamCatTools/,
+        https://github.com/USEPA/StreamCatTools
+BugReports: https://github.com/USEPA/StreamCatTools/issues
+VignetteBuilder: knitr
+License: MIT + file LICENSE
+NeedsCompilation: no
+Config/roxygen2/version: 8.1.0
+Packaged: 2026-10-02 19:15:33 UTC; mweber
 Repository: CRAN
-Date/Publication: 2026-05-14 22:10:02 UTC
+Date/Publication: 2026-10-02 19:50:09 UTC

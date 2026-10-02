@@ -1,20 +1,10 @@
 ---
-title: "Start Here"
-output: 
-  html_document:
-    theme: flatly
-    keep_md: yes
-    number_sections: true
-    highlighted: default 
-    toc: yes
-    toc_float:
-      collapsed: no
-      smooth_scroll: no
-    toc_depth: 2
+title: "StartHere"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Start Here}
-  %\VignetteEncoding{UTF-8}{inputenc}
+  %\VignetteIndexEntry{StartHere}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -51,7 +41,7 @@ The `StreamCatTools` package was designed to simplify the use of [StreamCat](htt
 There are three additional vignettes in `StreamCatTools` that are available on our website [here](https://usepa.github.io/StreamCatTools/) under the "Articles" tab:
 
 1. Introduction
-  * An overview of the basic fucntionality of the package
+  * An overview of the basic functionality of the package
 2. LakeCat
   * An overview of accessing data for lakes within the package and functions to do so
 3. Applications

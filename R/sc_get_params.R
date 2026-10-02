@@ -43,6 +43,8 @@ sc_get_params <- function(param = NULL) {
       params <- params[order(params)]
     } else if(param == 'variable_info') {
       params <- httr2::request('https://api.epa.gov/StreamCat/streams/variable_info') |>
+        httr2::req_throttle(rate = 30 / 60) |> 
+        httr2::req_retry(backoff = ~ 5, max_tries = 3) |>
         httr2::req_perform() |>
         httr2::resp_body_raw() |>
         readr::read_csv(show_col_types = FALSE) |>
@@ -54,6 +56,8 @@ sc_get_params <- function(param = NULL) {
                       source_name=SOURCE_NAME, source_URL=SOURCE_URL)
     } else if(param == 'categories'){
       params <- httr2::request('https://api.epa.gov/StreamCat/streams/variable_info') |>
+        httr2::req_throttle(rate = 30 / 60) |> 
+        httr2::req_retry(backoff = ~ 5, max_tries = 3) |>
         httr2::req_perform() |>
         httr2::resp_body_raw() |>
         readr::read_csv(show_col_types = FALSE) |>
@@ -105,7 +109,9 @@ sc_get_params <- function(param = NULL) {
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' fullname <- sc_fullname(metric='clay')
+#' }
 
 sc_fullname <- function(metric = NULL) {
   result <- tryCatch({
@@ -134,7 +140,7 @@ sc_fullname <- function(metric = NULL) {
 #' @param year Filter StreamCat metrics based on a particular year or years
 #' @param dataset Filter StreamCat metrics based on the dataset name
 #'
-#' @return A dataframe of merics and description that match filter criteria
+#' @return A dataframe of metrics and description that match filter criteria
 # #' @importFrom rlang .data
 #' @export
 #'
@@ -170,6 +176,8 @@ sc_get_metric_names <- function(category = NULL,
   }
   resp <- tryCatch({
     params <- httr2::request('https://api.epa.gov/StreamCat/streams/variable_info') |>
+    httr2::req_throttle(rate = 30 / 60) |> 
+    httr2::req_retry(backoff = ~ 5, max_tries = 3) |>
     httr2::req_perform() |>
     httr2::resp_body_raw() |>
     readr::read_csv(show_col_types = FALSE)
